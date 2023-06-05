@@ -1,4 +1,5 @@
 from enum import Enum
+from collections import defaultdict 
 
 # Character ID mappings
 mappings = {
@@ -336,6 +337,15 @@ aliases = {
     "b!bro": 53,
     "bbro": 53
 }
+
+# return duplicate characters as defaultdict with key being the base name ("Magikoopa") and value being a list of full names ["Magikoopa(R)", "Magikoopa(B)" . . .]
+def get_dupes():
+    dupes = defaultdict(list)
+    for char in mappings.values():
+        if "(" in char:
+            base_name = char.split("(")[0]
+            dupes[base_name].append(char)
+    return dupes
 
 
 # Character Enums
