@@ -86,3 +86,20 @@ def rfRandomPowerTeams():
 
 def rfRandomTeeBallTeams():
     return randomTeeBallTeams()
+
+
+# Assign stadium, pick, and batting order
+def rfAssignPickAndStadium():
+    stadium = rfRandomStadium()
+    player_order = ["1P", "2P"]
+    # Assign to host player and give remaining option to joining player
+    hosting_player = choice(player_order)
+    player_order.remove(hosting_player)
+    joining_player = player_order[0]
+
+    home_away = ["Home", "Away"]
+    hosting_team = choice(home_away)
+    home_away.remove(hosting_team)
+    joining_team = home_away[0]
+
+    return f"{stadium}.\nHost player:    {hosting_player} | {hosting_team}\nJoining player: {joining_player} | {joining_team}"

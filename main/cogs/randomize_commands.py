@@ -153,6 +153,12 @@ class RandomizeCommands(commands.Cog):
             await ctx.send(embed=embed)
     # End roll
 
+    @commands.command(name="game", help="Assign stadium, pick order, and home/away.")
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def game(self, ctx):
+        embed = discord.Embed(description=rfAssignPickAndStadium(), color=hex_r)
+        await ctx.send(embed=embed)
+
 
 async def setup(client):
     await client.add_cog(RandomizeCommands(client))
