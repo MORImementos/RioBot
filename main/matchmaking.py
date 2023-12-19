@@ -13,6 +13,7 @@ from services.image_functions import ifBuildTeamImageFile
 from helpers import utils
 
 mode_list = [ladders.STARS_OFF_MODE, ladders.STARS_ON_MODE, ladders.BIG_BALLA_MODE]
+instant_match_list = [ladders.BIG_BALLA_MODE]
 
 # Constant for starting percentile range for matchmaking search
 BASE_PERCENTILE_RANGE = 0.5
@@ -220,8 +221,12 @@ async def update_queue_status():
 # params: player's rating and amount of time they've spent in queue
 # return: min and max rating the player can match against
 def calc_search_range(rating, game_type, time_in_queue):
-    percentile = BASE_PERCENTILE_RANGE / (len(recent_matches[game_type]) + 1)
-    percentile += (percentile * time_in_queue / 180)
+
+    if game_type in instant_match_list or "Random" in game_type:
+        percentile = BASE_PERCENTILE_RANGE
+    else:
+        percentile = BASE_PERCENTILE_RANGE / (len(recent_matches[game_type]) + 1)
+        percentile += (percentile * time_in_queue / 180)
     rating_list_copy = []
     for user in ladders.ladders[game_type]:
         rating_list_copy.append(ladders.ladders[game_type][user]["rating"])
